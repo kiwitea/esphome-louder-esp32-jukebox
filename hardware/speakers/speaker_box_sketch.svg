@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="710" viewBox="0 0 680 710" role="img">
+<title>Speaker box for the dollhouse window: cross-section and mounting detail</title>
+<desc>Top: side view of the two-part printed box glued behind the wall, with the driver, damping wool, rear lid, wire exit and support leg standing on the floor. Bottom: close-up of the driver mounting area (plate, rim, felt gasket, flange).</desc>
+<style>
+text { font-family: Arial, Helvetica, sans-serif; font-size: 12px; fill: #2C2C2A; }
+.h { font-weight: bold; }
+.leader { stroke: #888780; stroke-width: 0.5; stroke-dasharray: 3 3; fill: none; }
+.wood { fill: #FAEEDA; stroke: #854F0B; stroke-width: 0.5; }
+.print { fill: #E1F5EE; stroke: #0F6E56; stroke-width: 0.5; }
+.metal { fill: #F1EFE8; stroke: #5F5E5A; stroke-width: 0.5; }
+.felt { fill: #5F5E5A; }
+.dot { fill: #444441; }
+</style>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="#444441" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<rect width="680" height="710" fill="#FFFFFF"/>
+
+<text class="h" x="12" y="24">1. Side view, cut in half (wood = amber, printed parts = green, driver = gray)</text>
+
+<rect class="wood" x="64" y="88" width="16" height="32"/>
+<rect class="wood" x="64" y="280" width="16" height="130"/>
+<rect class="print" x="80" y="100" width="12" height="20"/>
+<rect class="print" x="80" y="280" width="12" height="20"/>
+<rect class="print" x="92" y="100" width="320" height="8"/>
+<rect class="print" x="92" y="292" width="320" height="8"/>
+<rect class="print" x="412" y="100" width="12" height="94"/>
+<rect class="print" x="412" y="206" width="12" height="94"/>
+<rect class="print" x="404" y="108" width="8" height="86"/>
+<rect class="print" x="404" y="206" width="8" height="86"/>
+<rect x="215" y="114" width="186" height="172" rx="4" fill="none" stroke="#888780" stroke-width="1" stroke-dasharray="4 4"/>
+<rect class="felt" x="92" y="115" width="2" height="12"/>
+<rect class="felt" x="92" y="273" width="2" height="12"/>
+<rect class="metal" x="94" y="115" width="4" height="12"/>
+<rect class="metal" x="94" y="273" width="4" height="12"/>
+<rect class="metal" x="98" y="122" width="42" height="12"/>
+<rect class="metal" x="98" y="266" width="42" height="12"/>
+<rect class="metal" x="140" y="120" width="37" height="160"/>
+<line x1="98" y1="134" x2="138" y2="190" stroke="#5F5E5A" stroke-width="1.5"/>
+<line x1="98" y1="266" x2="138" y2="210" stroke="#5F5E5A" stroke-width="1.5"/>
+<line x1="138" y1="190" x2="138" y2="210" stroke="#5F5E5A" stroke-width="1.5"/>
+<rect x="410" y="194" width="20" height="12" rx="2" fill="#888780"/>
+<line x1="177" y1="200" x2="440" y2="200" stroke="#5F5E5A" stroke-width="2" stroke-linecap="round"/>
+<line x1="90" y1="200" x2="34" y2="200" stroke="#444441" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="34" y="186">sound out</text>
+<text x="448" y="204">Wire, sealed with glue</text>
+
+<rect class="print" x="311" y="300" width="3.5" height="3"/>
+<rect class="print" x="398.5" y="300" width="3.5" height="3"/>
+<rect class="print" x="315" y="300" width="83" height="6.5"/>
+<rect class="print" x="326" y="306.5" width="62" height="92"/>
+<rect class="print" x="315" y="398.5" width="83" height="6.5"/>
+<rect class="felt" x="315" y="405" width="83" height="5"/>
+<rect x="100" y="410" width="460" height="8" fill="#D3D1C7" stroke="#5F5E5A" stroke-width="0.5"/>
+
+<text x="12" y="58">Dollhouse wall</text>
+<line class="leader" x1="72" y1="64" x2="72" y2="92"/><circle class="dot" cx="72" cy="92" r="2"/>
+<text x="110" y="58">Front plate (part 1)</text>
+<line class="leader" x1="112" y1="64" x2="86" y2="104"/><circle class="dot" cx="86" cy="104" r="2"/>
+<text x="250" y="58">Walls (part 1)</text>
+<line class="leader" x1="254" y1="64" x2="254" y2="104"/><circle class="dot" cx="254" cy="104" r="2"/>
+<text x="424" y="58" text-anchor="end">Lid (part 2)</text>
+<line class="leader" x1="418" y1="64" x2="418" y2="104"/><circle class="dot" cx="418" cy="104" r="2"/>
+
+<text x="140" y="346">Driver (FRS 7)</text>
+<line class="leader" x1="160" y1="276" x2="160" y2="332"/><circle class="dot" cx="160" cy="276" r="2"/>
+<text x="236" y="346">Damping wool</text>
+<line class="leader" x1="244" y1="282" x2="244" y2="332"/><circle class="dot" cx="244" cy="282" r="2"/>
+
+<text x="412" y="362">Support leg (part 3), glued to box</text>
+<line class="leader" x1="388" y1="358" x2="408" y2="358"/><circle class="dot" cx="388" cy="358" r="2"/>
+<text x="412" y="388">Felt pad, not glued</text>
+<line class="leader" x1="396" y1="407" x2="410" y2="392"/><circle class="dot" cx="396" cy="407" r="2"/>
+<text x="420" y="436">Dollhouse floor</text>
+
+<g transform="translate(0,470)">
+<text class="h" x="12" y="14">2. Detail: driver mounting, top half of the front plate</text>
+
+<rect class="wood" x="60" y="50" width="30" height="54"/>
+<rect class="print" x="90" y="65" width="28" height="42"/>
+<rect class="print" x="118" y="65" width="212" height="18"/>
+<rect class="print" x="118" y="83" width="14" height="8"/>
+<rect class="felt" x="118" y="95" width="6" height="12"/>
+<rect class="metal" x="124" y="95" width="9" height="33"/>
+<rect class="metal" x="133" y="122" width="42" height="12"/>
+
+<text x="14" y="40">Dollhouse wall</text>
+<text x="110" y="40">Front plate, glued to wall</text>
+<line class="leader" x1="114" y1="46" x2="106" y2="68"/><circle class="dot" cx="106" cy="68" r="2"/>
+<text x="360" y="96">Recess: pocket that centres the flange</text>
+<line class="leader" x1="356" y1="92" x2="132" y2="93"/><circle class="dot" cx="132" cy="93" r="2"/>
+<text x="360" y="120">Flange: the driver's metal rim</text>
+<line class="leader" x1="356" y1="116" x2="130" y2="112"/><circle class="dot" cx="130" cy="112" r="2"/>
+<text x="112" y="176" text-anchor="end">Hole for the cone</text>
+<line class="leader" x1="104" y1="109" x2="104" y2="164"/><circle class="dot" cx="104" cy="108" r="2"/>
+<text x="121" y="208">Felt gasket on the gasket seat</text>
+<line class="leader" x1="121" y1="104" x2="121" y2="194"/><circle class="dot" cx="121" cy="104" r="2"/>
+</g>
+</svg>
