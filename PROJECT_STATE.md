@@ -186,10 +186,10 @@ Check these when the board is at home, then update the hardware list and ask Cla
 - [x] Flash size: confirmed 8 MB in the boot log
 - [x] Music source: Spotify via Music Assistant (decided). Confirm the Spotify account is Premium
 - [x] Home Assistant install type (OS or Container), which decides how Music Assistant is installed
-- [ ] Power bank: 5 V at 3 A, and does it stay on at low load
-- [ ] Mounting-hole positions of the Visaton FRS 7 (from the datasheet)
-- [ ] Does the PN532, mounted on the side of the box, need a printed bracket? --> No, we can use the 3mm mounting holes in the board to glue/screw it to the side of the box with nylon nuts and screws
-- [ ] Designs for the 3D-printed parts
+- [x] Power bank: 5 V at 3 A, and does it stay on at low load
+- [x] Mounting-hole positions of the Visaton FRS 7 (from the datasheet)
+- [x] Does the PN532, mounted on the side of the box, need a printed bracket? --> No, we can use the 3mm mounting holes in the board to glue/screw it to the side of the box with nylon nuts and screws
+- [x] Designs for the 3D-printed parts
 - [x] Does the integration pause when a card is removed? Test by scanning and removing a card --> Yes. Customization required.
 - [x] Does scanning the same card again restart playback, or is it ignored? --> Ignored. Customization needed.
 - [x] Same card scanned while it is already playing: restart from the beginning (stock behavior) or keep playing? --> Restart from beginning
