@@ -1,6 +1,6 @@
 {
     "parameterSets": {
-        "malte_v1": {
+        "petg_v5": {
             "$fn": "64",
             "box_w": "80",
             "cone_clear_d": "56",
@@ -12,6 +12,7 @@
             "grille_bar": "1.2",
             "grille_hole_d": "5",
             "leg_d": "12",
+            "leg_flare_h": "4",
             "leg_from_back": "10",
             "leg_plate_extra": "4",
             "leg_plate_t": "2",
@@ -41,8 +42,8 @@
             "wall_t": "5",
             "window": "60",
             "window_bottom_height": "51",
-            "wire_d": "4",
-            "wire_from_edge": "8"
+            "wire_d": "6",
+            "wire_from_edge": "10"
         }
     },
     "parameterSets": "",

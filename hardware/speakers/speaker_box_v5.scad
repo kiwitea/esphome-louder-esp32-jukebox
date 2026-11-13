@@ -13,6 +13,9 @@
 //
 // Suggested print settings (PETG): 0.2 mm layers, 4 perimeters,
 // 100% flow, 235-245 C, fan low (30-50%) for good layer bonding.
+// The body needs supports under the ring of the front plate around the
+// spigot (only 4.5 mm tall). Use "support on build plate only", Z distance
+// 0.25-0.3 mm, 2 interface layers. Nothing else needs support.
 // Print one body, one lid and one leg per window (2 of each in total).
 // =============================================================
 
@@ -100,6 +103,10 @@ leg_d = 24;
 leg_plate_extra = 4;
 // Thickness of the top and foot plates (mm)
 leg_plate_t = 2.5;
+// Height of the flared transition (pyramid) under the top plate (mm).
+// Equal to leg_plate_extra gives 45 degrees, which prints without support.
+// Smaller values are steeper overhangs, so do not go below about 3.
+leg_flare_h = 4;
 // Distance from the back of the box to the rear edge of the leg (mm)
 leg_from_back = 10;
 // Raised frame on the bottom of the box that locates the leg: on / off
@@ -136,9 +143,9 @@ assert(depth <= 90, "Depth is more than the 90 mm available.");
 assert(box_w <= 80, "Box is wider than 80 mm.");
 assert(box_w > window + 2 * 4, "Glue ring around the window is less than 4 mm.");
 assert(screw_circle_d / 2 < inner_w / 2 * sqrt(2) - 4, "Screw holes collide with the box corners.");
-assert(!leg_seat_on || leg_zc + leg_plate_d / 2 + leg_seat_clear / 2 + leg_seat_wall <= body_len,
+assert(!leg_seat_on || leg_zc + leg_plate_d / 2 + leg_seat_clear / 2 + leg_seat_wall + leg_seat_h <= body_len,
        "Leg frame would run onto the lid. Increase leg_from_back.");
-assert(!leg_seat_on || leg_plate_w + leg_seat_clear + 2 * leg_seat_wall < box_w - 2 * corner_r,
+assert(!leg_seat_on || leg_plate_w + leg_seat_clear + 2 * leg_seat_wall + 2 * leg_seat_h < box_w - 2 * corner_r,
        "Leg frame is wider than the flat bottom of the box.");
 assert(!recess_on || flange_w + flange_clear + 2 * recess_wall < inner_w - 0.5,
        "Recess rim is too wide for the box. Make the box wider or the rim thinner.");
@@ -198,17 +205,24 @@ module body() {
                     cylinder(d = screw_pilot_d, h = screw_depth + 1);
     }
     // raised frame on the bottom of the box that locates the support leg
-    if (leg_seat_on)
+    // (outside faces slope at 45 degrees so it prints without support)
+    if (leg_seat_on) {
+        top_w  = leg_plate_w + leg_seat_clear + 2 * leg_seat_wall;
+        top_d  = leg_plate_d + leg_seat_clear + 2 * leg_seat_wall;
+        base_w = top_w + 2 * leg_seat_h;
+        base_d = top_d + 2 * leg_seat_h;
         translate([0, -box_w / 2 + 0.01, leg_zc])
             rotate([90, 0, 0])
-                linear_extrude(leg_seat_h + 0.01)
-                    difference() {
-                        square([leg_plate_w + leg_seat_clear + 2 * leg_seat_wall,
-                                leg_plate_d + leg_seat_clear + 2 * leg_seat_wall],
-                               center = true);
-                        square([leg_plate_w + leg_seat_clear,
-                                leg_plate_d + leg_seat_clear], center = true);
-                    }
+                difference() {
+                    linear_extrude(leg_seat_h + 0.01,
+                                   scale = [top_w / base_w, top_d / base_d])
+                        square([base_w, base_d], center = true);
+                    translate([0, 0, -1])
+                        linear_extrude(leg_seat_h + 3)
+                            square([leg_plate_w + leg_seat_clear,
+                                    leg_plate_d + leg_seat_clear], center = true);
+                }
+    }
     // centring rim (recess) for the square flange
     if (recess_on)
         translate([0, 0, spigot_h + plate_t])
@@ -250,7 +264,13 @@ module leg() {
     linear_extrude(leg_plate_t) square([leg_plate_w, leg_plate_d], center = true);
     // post
     translate([0, 0, leg_plate_t - 0.01])
-        linear_extrude(leg_h - 2 * leg_plate_t + 0.02)
+        linear_extrude(leg_h - 2 * leg_plate_t - leg_flare_h + 0.02)
+            square([leg_w, leg_d], center = true);
+    // flare: pyramid frustum from the post size up to the plate size,
+    // so the top plate does not overhang abruptly
+    translate([0, 0, leg_h - leg_plate_t - leg_flare_h])
+        linear_extrude(leg_flare_h + 0.01,
+                       scale = [leg_plate_w / leg_w, leg_plate_d / leg_d])
             square([leg_w, leg_d], center = true);
     // top plate
     translate([0, 0, leg_h - leg_plate_t])
@@ -264,7 +284,8 @@ module leg_assembled() {
 }
 
 echo(str("Gap box bottom to floor: ", floor_gap, " mm, leg height: ", leg_h, " mm"));
-assert(leg_h > 2 * leg_plate_t + 2, "Leg is too short: check window_bottom_height.");
+assert(leg_h > 2 * leg_plate_t + leg_flare_h + 2, "Leg is too short: check window_bottom_height.");
+assert(leg_flare_h >= leg_plate_extra * 0.75, "Flare is too steep to print without support: raise leg_flare_h.");
 
 // -------------------------------------------------------------
 // Output

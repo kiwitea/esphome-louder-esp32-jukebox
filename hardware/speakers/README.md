@@ -16,19 +16,19 @@ A small printed enclosure that sits behind a 60 x 60 mm window in the dollhouse 
 
 | File | What it is |
 |---|---|
-| `speaker_box_v4.scad` | Parametric OpenSCAD source of all parts. All dimensions are parameters at the top. |
-| `speaker_box_v4.stl` | Print file: to be printed/imported in 3D printer software. |
+| `speaker_box_v5.scad` | Parametric OpenSCAD source of all parts. All dimensions are parameters at the top. |
+| `speaker_box_v5.stl` | Print file: to be printed/imported in 3D printer software. |
 | `speaker_box_sketch.svg` | Sketch: cross-section and close-up of the driver mounting. |
-| `speaker_box_v4_cross_section.png` | OpenSCAD screenshot: assembled half cut away. |
-| `speaker_box_v4_parts.png` | OpenSCAD screenshot: print layout (body, lid, leg). |
+| `speaker_box_v5_cross_section.png` | OpenSCAD screenshot: assembled half cut away. |
+| `speaker_box_v5_parts.png` | OpenSCAD screenshot: print layout (body, lid, leg). |
 
 Per box, print one body, one lid and one leg. Re-export the STLs if you change any parameter.
 
 
 ![Sketch](speaker_box_sketch.svg)
 
-![OpenSCAD section](speaker_box_v4_cross_section.png)
-![OpenSCAD print layout](speaker_box_v4_parts.png)
+![OpenSCAD section](speaker_box_v5_cross_section.png)
+![OpenSCAD print layout](speaker_box_v5_parts.png)
 
 ## Design choices
 
@@ -44,7 +44,7 @@ Per box, print one body, one lid and one leg. Re-export the STLs if you change a
 
 **Two printed parts plus a leg.** The driver goes in through the open back, and a lid with a plug closes the box. The lid has a 4 mm wire hole low on the lid, sealed with glue or silicone. The body is printed with the grille face down, so the grille and the glued face need no extra work.
 
-**Support leg.** The box hangs about 8 cm out from the wall and weighs about 0.3 kg, so a leg takes the weight to the floor. The gap from the box bottom to the floor is 42 mm (window bottom edge at 51 mm, box centred on the window). The leg is 40.5 mm tall, plus a 2 mm felt pad that gets squeezed by 0.5 mm. The leg is a separate part because a leg built into the wall would need supports. A 1 mm sloped frame on the bottom of the box locates the leg, so it can only be glued in the right place.
+**Support leg.** The box hangs about 8 cm out from the wall and weighs about 0.3 kg, so a leg takes the weight to the floor. The gap from the box bottom to the floor is 42 mm (window bottom edge at 51 mm, box centred on the window). The leg is 40.5 mm tall, plus a 2 mm felt pad that gets squeezed by 0.5 mm. The leg is a separate part because a leg built into the wall would need supports. It has a 14 x 14 mm post with a foot plate and a top plate, and a 45 degree pyramid flare under the top plate so the 4 mm overhang prints without support (`leg_flare_h`). A 1 mm sloped frame on the bottom of the box locates the leg, so it can only be glued in the right place.
 
 **Material.** PLA for the prototype, PETG for the final boxes. PLA creeps and softens above about 55 to 60 degrees, which a hanging box on a sunny or heated wall will see.
 
@@ -75,12 +75,12 @@ Print each part in the orientation of the STL file. The body has the grille face
 | Brim | None | None |
 | Filament | Any dry PLA | Dry the filament first (about 65 degrees C, 4 to 6 hours if it was stored open) |
 
-Supports are needed only under the ring of the front plate around the spigot (4.5 mm tall). In the preview there should be nothing else. The underside of that ring is a glue face, so a rough surface does not matter; sand it flat on a table.
+Supports are needed only under the ring of the front plate around the spigot (4.5 mm tall). In the preview there should be nothing else, and the leg needs none because of its flare. The underside of that ring is a glue face, so a rough surface does not matter; sand it flat on a table.
+
+PLA prototype result: printed at 0.28 mm, all dimensions fit. The supports under the spigot ring came off easily, though not perfectly clean (the supports stayed on the plate and the box came off first). The first leg had no flare and its top plate overhang printed poorly, which is why the flare was added.
 
 ## Things to check on the prototype
 
 - The spigot in the sawn window (`spigot_clear`), the flange in its pocket (`flange_clear`) and the leg in its frame (`leg_seat_clear`). PETG prints fit slightly tighter than PLA.
 - The pilot hole (`screw_pilot_d`). It is 2.6 mm for PETG. PLA can split, so try 2.8 mm.
-- The real gap from the box bottom to the floor (`window_bottom_height`), which assumes a flat floor and a box centred on the window.
-- The depth inside the dollhouse (`depth`, max 90 mm).
 - Airtightness of the walls and the lid seam, and the sound of the first box.
