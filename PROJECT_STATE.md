@@ -200,6 +200,7 @@ Changelog, newest first:
 
 | Date | Change |
 | --- | --- |
+| 2026-11-13 | Added the ESPHome build using pinned Sonocotta packages and a local jukebox package; RGB light removed to free GPIO21 for the back button. |
 | 2026-11-08 | Speakers changed to the 8 Ω Visaton FRS 7: cheaper and available, about 3 dB lower maximum volume on 5 V. |
 | 2026-11-07 | Read the integration source: it pauses on unknown, none or empty. Plan changed to patching the integration and keeping the firmware as is. |
 | 2026-11-07 | Cards are scanned on a side-mounted reader: playback must continue after removal, and back/forward must work without a card present. |

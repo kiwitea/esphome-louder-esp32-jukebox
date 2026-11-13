@@ -1,0 +1,104 @@
+spi:
+  clk_pin: GPIO12
+  mosi_pin: GPIO11
+  miso_pin: GPIO13
+
+text_sensor:
+  - platform: template
+    name: RFID Jukebox Tag
+    id: rfid_tag_uid
+    icon: mdi:rfid
+
+pn532_spi:
+  cs_pin: GPIO10
+  update_interval: 300ms
+  on_tag:
+    then:
+      - text_sensor.template.publish:
+          id: rfid_tag_uid
+          state: !lambda "return x;"
+  on_tag_removed:
+    then:
+      - text_sensor.template.publish:
+          id: rfid_tag_uid
+          state: Unknown
+
+binary_sensor:
+  - platform: gpio
+    name: "${friendly_name} Volume Up"
+    pin:
+      number: GPIO5
+      mode: INPUT_PULLUP
+      inverted: true
+    filters:
+      - delayed_on: 20ms
+      - delayed_off: 20ms
+    on_press:
+      - if:
+          condition:
+            lambda: "return !id(external_media_player).is_muted();"
+          then:
+            - media_player.volume_up:
+                id: external_media_player
+
+  - platform: gpio
+    name: "${friendly_name} Volume Down"
+    pin:
+      number: GPIO6
+      mode: INPUT_PULLUP
+      inverted: true
+    filters:
+      - delayed_on: 20ms
+      - delayed_off: 20ms
+    on_press:
+      - if:
+          condition:
+            lambda: "return !id(external_media_player).is_muted();"
+          then:
+            - media_player.volume_down:
+                id: external_media_player
+
+  - platform: gpio
+    name: "${friendly_name} Back Button"
+    pin:
+      number: GPIO21
+      mode: INPUT_PULLUP
+      inverted: true
+    filters:
+      - delayed_on: 20ms
+      - delayed_off: 20ms
+    on_press:
+      - homeassistant.action:
+          action: media_player.media_previous_track
+          data:
+            entity_id: ${ma_entity}
+
+  - platform: gpio
+    name: "${friendly_name} Forward Button"
+    pin:
+      number: GPIO40
+      mode: INPUT_PULLUP
+      inverted: true
+    filters:
+      - delayed_on: 20ms
+      - delayed_off: 20ms
+    on_press:
+      - homeassistant.action:
+          action: media_player.media_next_track
+          data:
+            entity_id: ${ma_entity}
+
+  - platform: gpio
+    name: "${friendly_name} Play Pause Button"
+    pin:
+      number: GPIO39
+      mode: INPUT_PULLUP
+      inverted: true
+    filters:
+      - delayed_on: 20ms
+      - delayed_off: 20ms
+    on_press:
+      - homeassistant.action:
+          action: media_player.media_play_pause
+          data:
+            entity_id: ${ma_entity}
