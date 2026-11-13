@@ -1,6 +1,6 @@
 # About
 
-Add some information about your project here.
+Kids Jukebox based on Louder-ESP32. Derived from https://github.com/XtracT/rfid_jukebox and the original Sonocotta project: https://github.com/sonocotta/esp32-audio-dock.
 
 # Installation
 
