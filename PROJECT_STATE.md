@@ -130,7 +130,7 @@ Home Assistant setup:
 
 - [x] Install Music Assistant (add-on on Home Assistant OS, Docker otherwise) and add the Spotify provider
 - [x] Install HACS
-- [x] Add `https://github.com/XtracT/rfid_jukebox` as a custom HACS repository (category Integration), install, restart
+- [ ] Add this repository as a custom HACS repository (category Integration), install, restart
 - [x] Flash the firmware over USB, then adopt the device in ESPHome
 - [ ] Add the RFID Jukebox integration: tag sensor, Music Assistant player, filesystem ID
 - [ ] Scan tags and map each to a playlist or folder
@@ -150,32 +150,11 @@ Changes to the Owlbox `esphome/jukebox.yaml` (needs ESPHome 2025.8.0 or newer):
 | Boot sound | `tas5805m_boot_louder.flac` must sit next to the YAML; the DAC needs it to lock the clock. |
 | Idle | The DAC powers down after 2 minutes idle or paused. |
 | Display (optional) | Add Sonocotta's `oled.yaml` package once the module is chosen. |
-| Tag removal | Confirmed in the integration's \_\_init\_\_.py: when the tag sensor goes to unknown, none or empty, it pauses a playing player. Keep the firmware as is: it publishes Unknown on removal, which is also what lets a repeat scan of the same card register. Patch the integration instead: in async\_tag\_changed\_handler, replace the final else branch (tag removed) with a log line. Fork the repo and add the fork as the HACS custom repository, since an edit in place is overwritten by updates. |
+| Tag removal | Keep the firmware as is: it publishes Unknown on removal, which also lets the same card be scanned again. The vendored integration has a `Pause playback when tag is removed` option (default on for upstream compatibility); turn it off for this jukebox. When off, removing a tag leaves playback running and scanning the same tag again restarts it. Upstream source and comparison instructions are in `custom_components/rfid_jukebox/UPSTREAM.md`. |
 | OTA and API security | ESPHome 2026.10 warns about OTA passwords. Use an api: encryption: key plus ota: - platform: esphome with encryption: and no password. Keep the key Home Assistant already has for the device; a new key locks Home Assistant out. The Owlbox YAML has neither, so add both when adopting it. |
 
 Base config approach (decided 10 November): use Sonocotta's louder-esp32-s3-idf.yaml as the base instead of the older Owlbox file, keep its remote packages pinned to a tag or commit that is bumped on purpose, and drop its light.yaml package because that claims GPIO21, the back button. Everything specific to this box goes in a local jukebox.yaml package: PN532, tag text sensor, five buttons and the Home Assistant actions. The table above lists changes relative to the Owlbox file; the amplifier, volume limits and boot sound now come from Sonocotta's packages instead.
 
-Volume up button (untested draft; volume down is the same with GPIO6 and `media_player.volume_down`):
-
-```yaml
-binary_sensor:
-  - platform: gpio
-    name: "${friendly_name} Volume Up"
-    pin:
-      number: GPIO5
-      mode: INPUT_PULLUP
-      inverted: true
-    filters:
-      - delayed_on: 20ms
-      - delayed_off: 20ms
-    on_press:
-      - if:
-          condition:
-            lambda: 'return !id(louder_mediaplayer).is_muted();'
-          then:
-            - media_player.volume_up:
-                id: louder_mediaplayer
-```
 
 ## Open questions and changelog
 
@@ -191,15 +170,16 @@ Check these when the board is at home, then update the hardware list and ask Cla
 - [x] Does the PN532, mounted on the side of the box, need a printed bracket? --> No, we can use the 3mm mounting holes in the board to glue/screw it to the side of the box with nylon nuts and screws
 - [x] Designs for the 3D-printed parts
 - [x] Does the integration pause when a card is removed? Test by scanning and removing a card --> Yes. Customization required.
-- [x] Does scanning the same card again restart playback, or is it ignored? --> Ignored. Customization needed.
+- [x] Does scanning the same card again restart playback, or is it ignored? --> With pause-on-removal enabled it resumes; with the option disabled it restarts from the beginning. Verify on the installed integration.
 - [x] Same card scanned while it is already playing: restart from the beginning (stock behavior) or keep playing? --> Restart from beginning
-- [ ] Fork rfid\_jukebox, apply the removal patch, and install the fork through HACS
+- [ ] Add this repository to HACS, install the vendored RFID Jukebox integration, and disable pause on tag removal
 - [x] Decided: PN532 reader with new 13.56 MHz cards, tags or stickers; the old 125 kHz cards are retired
 
 Changelog, newest first:
 
 | Date | Change |
 | --- | --- |
+| 2026-11-14 | Vendored the RFID Jukebox Home Assistant integration at its upstream baseline; added a configurable pause-on-tag-removal option and upstream comparison notes. |
 | 2026-11-13 | Added the ESPHome build using pinned Sonocotta packages and a local jukebox package; RGB light removed to free GPIO21 for the back button. |
 | 2026-11-08 | Speakers changed to the 8 Ω Visaton FRS 7: cheaper and available, about 3 dB lower maximum volume on 5 V. |
 | 2026-11-07 | Read the integration source: it pauses on unknown, none or empty. Plan changed to patching the integration and keeping the firmware as is. |

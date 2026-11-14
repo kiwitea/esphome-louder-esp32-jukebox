@@ -1,0 +1,14 @@
+{
+    "domain": "rfid_jukebox",
+    "name": "RFID Jukebox",
+    "documentation": "https://github.com/XtracT/rfid-jukebox",
+    "issue_tracker": "https://github.com/XtracT/rfid-jukebox/issues",
+    "codeowners": [
+        "@XtracT"
+    ],
+    "requirements": [],
+    "version": "0.1.1",
+    "iot_class": "local_push",
+    "config_flow": true,
+    "logo": "/logo.png"
+}

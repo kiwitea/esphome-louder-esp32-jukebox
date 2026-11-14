@@ -30,12 +30,13 @@ forward GPIO40.
 
 ## Home Assistant and Music Assistant
 
-Install the RFID Jukebox HACS integration, select the `RFID Jukebox Tag` text
-sensor and the Music Assistant player, then map scanned UIDs to playlists or
-folders in the integration's `rfid_mappings.yaml`.
+Add this repository to HACS as a custom integration repository and install the
+RFID Jukebox integration from it. Select the `RFID Jukebox Tag` text sensor and
+the Music Assistant player, then map scanned UIDs to playlists or folders in
+the integration's `rfid_mappings.yaml`.
 
 The firmware publishes `Unknown` when a tag is removed, as required for
-re-scanning the same tag. The stock RFID Jukebox integration pauses playback
-on that state, so keeping playback going requires the planned change to
-`async_tag_changed_handler` in a maintained fork of that integration. Back and
-forward controls are not gated on a tag being present.
+re-scanning the same tag. In the integration's options, disable **Pause
+playback when tag is removed** to keep playback going; this also makes scanning
+the same tag again restart playback. Back and forward controls are not gated on
+a tag being present.
