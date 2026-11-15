@@ -1,11 +1,15 @@
-# About
+# Kids Jukebox
 
-Kids Jukebox based on Louder-ESP32. Derived from https://github.com/XtracT/rfid_jukebox and the original Sonocotta project: https://github.com/sonocotta/esp32-audio-dock.
+ESPHome firmware for a Sonocotta Louder-ESP32-S3 with an Owlbox-style PN532
+reader and five-button controls.
 
-# Installation
+## Build your own firmware
 
-You can use the button below to install the pre-built firmware directly to your device via USB from the browser.
+There is no precompiled firmware download. Each device needs its own Wi-Fi
+credentials and ESPHome API encryption key.
 
-<esp-web-install-button manifest="firmware/kids-jukebox.manifest.json"></esp-web-install-button>
+1. Follow the [project setup instructions](https://github.com/kiwitea/esphome-louder-esp32-jukebox#configuration).
+2. Build and flash `kids-jukebox.factory.yaml` with ESPHome. The first flash
+   should be over USB.
 
-<script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+The repository's CI compiles the configuration on pushes and pull requests.

@@ -12,13 +12,15 @@ remotely at a pinned upstream commit; device-specific logic is kept in
    in Home Assistant; changing it will disconnect the existing integration.
 2. Set `ma_entity` in [kids-jukebox.yaml](./kids-jukebox.yaml) to the actual
    Music Assistant player entity ID.
-3. Validate or build with `esphome config kids-jukebox.factory.yaml` or
-   `esphome run kids-jukebox.factory.yaml`. The first flash should be over USB.
+3. Validate with `esphome config kids-jukebox.factory.yaml`, then build and
+   flash with `esphome run kids-jukebox.factory.yaml`. The first flash should be
+   over USB.
 
-GitHub Actions copies `secrets.yaml.example` to `secrets.yaml` for its builds.
-The published firmware therefore contains the example Wi-Fi credentials and
-the public dummy API key; replace them with device-specific values and build
-locally before using the firmware with Home Assistant.
+This project does not publish precompiled firmware: each device needs a build
+with its own Wi-Fi credentials and API encryption key. GitHub Actions compiles
+the configuration on pushes and pull requests using example secrets, and the
+release workflow repeats that build before publishing a release. CI verifies
+that the project compiles; it does not produce or distribute firmware for users.
 
 The Sonocotta packages are pinned to commit
 `98d19a08d9b753ed7d14f2a30c799d40e3464942`. To update upstream deliberately,

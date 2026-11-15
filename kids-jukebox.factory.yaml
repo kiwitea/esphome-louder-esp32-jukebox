@@ -13,13 +13,3 @@ improv_ble:
   authorizer: none
 
 improv_serial:
-
-http_request:
-
-ota:
-  - platform: http_request
-
-update:
-  - platform: http_request
-    name: Firmware
-    source: https://esphome.github.io/esphome-louder-esp32-jukebox/firmware/kids-jukebox.manifest.json
