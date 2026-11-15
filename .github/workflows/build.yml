@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        uses: actions/checkout@v7.0.1
 
       - name: Prepare build secrets
         run: cp secrets.yaml.example secrets.yaml
@@ -24,4 +24,4 @@ jobs:
         uses: esphome/build-action@v8.1.0
         with:
           yaml-file: kids-jukebox.factory.yaml
-          version: 2026.11.0
+          version: 2026.10.0
