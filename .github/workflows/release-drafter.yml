@@ -16,8 +16,5 @@ concurrency:
 jobs:
   release-drafter:
     name: Update draft release
-    # Computes the next CalVer version (YY.M.N, reusing the current draft's
-    # sequence number) and runs release-drafter with it. Reads this repo's
-    # .github/release-drafter.yml for the changelog categories, then empties
-    # the draft's assets so the Build workflow can attach a fresh set.
+    # Computes the next CalVer version and updates the draft changelog.
     uses: esphome/workflows/.github/workflows/draft-calver-release.yml@b2c0cffae477d81175c67e6a44651a9bc2b49f6f  # 2026.11.0

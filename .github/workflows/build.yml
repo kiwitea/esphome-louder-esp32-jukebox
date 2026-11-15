@@ -2,33 +2,27 @@ name: Build
 
 on:
   pull_request:
+  push:
+    branches: [main]
   workflow_dispatch:
-  workflow_run:
-    workflows: ["Release Drafter"]
-    types: [completed]
+  workflow_call:
 
-# The called workflow's draft-release jobs (read draft info, upload assets,
-# strip the pending warning) need contents: write; they only run on
-# workflow_run events. Fork pull requests still get a read-only token.
 permissions:
-  contents: write
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event_name == 'workflow_run' && 'release-drafter' || github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  contents: read
 
 jobs:
   build:
-    name: Build to Draft Release
-    # Builds the factory configs and — when triggered by a successful Release
-    # Drafter run — uploads the firmware to the current draft release. On
-    # pull_request / workflow_dispatch it only builds.
-    uses: esphome/workflows/.github/workflows/build-to-draft-release.yml@b2c0cffae477d81175c67e6a44651a9bc2b49f6f  # 2026.11.0
-    with:
-      #### Modify below here to match your project ####
-      # Every *.factory.yaml in the repo is discovered automatically; the
-      # builds are combined into a single manifest published under this name.
-      # Remove combined-name to publish one manifest per file instead.
-      # combined-name: project-template
-      esphome-version: 2026.11.0
-      #### Modify above here to match your project ####
+    name: Compile ESPHome configuration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v7.0.1
+
+      - name: Prepare build secrets
+        run: cp secrets.yaml.example secrets.yaml
+
+      - name: Compile firmware
+        uses: esphome/build-action@v8.1.0
+        with:
+          yaml-file: kids-jukebox.factory.yaml
+          version: 2026.10.0

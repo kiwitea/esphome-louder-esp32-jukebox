@@ -9,7 +9,7 @@
 #
 # The basics are derived from Louder-ESP32-S3:
 #  Ref: https://github.com/sonocotta/esp32-audio-dock/blob/main/firmware/esphome/3-louder-esp32/louder-esp32-s3-idf.yaml
-# 
+#
 # We try to stay as close as possible to the original Louder-ESP32-S3
 #  because that makes updating easier.
 #
@@ -37,11 +37,12 @@ substitutions:
   tas58xx_volume_max: -12dB
   tas58xx_volume_min: -60dB
   ir_rx_pin: GPIO07
+  power_adc_pin: GPIO04
 
 esphome:
   name: ${name}
   friendly_name: ${friendly_name}
-  min_version: 2026.11.0
+  min_version: 2026.10.0
   name_add_mac_suffix: false
   platformio_options:
     board_build.flash_mode: dio
@@ -106,12 +107,16 @@ packages:
       - firmware/esphome/packages/monitoring.yaml
       - firmware/esphome/packages/monitoring-power.yaml  # available from rev K2 or newer
       - firmware/esphome/packages/monitoring-wifi.yaml
-  jukebox: !include jukebox.yaml
+  jukebox:
+    url: https://github.com/kiwitea/esphome-louder-esp32-jukebox
+    ref: main
+    files:
+      - jukebox.yaml
 
 api:
   reboot_timeout: 0s
   encryption:
-    key: !secret api_encryption_key
+    key: !secret esphome_api_encryption_key
 
 media_player:
   - id: !extend external_media_player
