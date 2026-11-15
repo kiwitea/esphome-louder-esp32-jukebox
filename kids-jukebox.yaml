@@ -120,5 +120,5 @@ api:
 
 media_player:
   - id: !extend external_media_player
-    volume_increment: 2%
+    volume_increment: 5%
     volume_max: 80%
