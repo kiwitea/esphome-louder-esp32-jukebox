@@ -107,7 +107,11 @@ packages:
       - firmware/esphome/packages/monitoring.yaml
       - firmware/esphome/packages/monitoring-power.yaml  # available from rev K2 or newer
       - firmware/esphome/packages/monitoring-wifi.yaml
-  jukebox: !include jukebox.yaml
+  jukebox:
+    url: https://github.com/kiwitea/esphome-louder-esp32-jukebox
+    ref: main
+    files:
+      - jukebox.yaml
 
 api:
   reboot_timeout: 0s

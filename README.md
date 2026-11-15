@@ -2,8 +2,8 @@
 
 ESPHome firmware for a Sonocotta Louder-ESP32-S3 with the Owlbox-style PN532
 reader and five-button controls. Sonocotta's functional packages are imported
-remotely at a pinned upstream commit; device-specific logic is kept in
-[jukebox.yaml](./jukebox.yaml).
+remotely at a pinned upstream commit; device-specific logic is imported from
+[jukebox.yaml](./jukebox.yaml) on this repository's `main` branch.
 
 ## Configuration
 
@@ -29,6 +29,11 @@ Sonocotta's `media-player-no-light.yaml` instead of its normal light-enabled
 media player, and omits the RGB LED package because GPIO21 is the back button.
 The local configuration sets the Louder board's base options and overrides
 TAS5805M gain and volume limits for this 5 V setup.
+
+The device-specific package uses `ref: main`, so ESPHome fetches its latest
+version from this repository's `main` branch when resolving packages. Pin it to
+a commit hash instead for reproducible builds; updating that hash is a manual
+change.
 
 The PN532 must be in SPI mode (switch 1 OFF, switch 2 ON). Its SPI pins are
 GPIO12/13/11 with chip select on GPIO10. Buttons connect their GPIO pin to
