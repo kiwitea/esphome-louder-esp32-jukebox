@@ -8,7 +8,8 @@
                 "data": {
                     "tag_sensor": "Tag Sensor",
                     "media_player": "Media Player",
-                    "ma_filesystem": "Music Assistant Filesystem Path"
+                    "ma_filesystem": "Music Assistant Filesystem Path",
+                    "pause_on_tag_removal": "Pause playback when tag is removed"
                 }
             }
         }

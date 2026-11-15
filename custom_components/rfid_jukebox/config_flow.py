@@ -1,5 +1,4 @@
 """Config flow for RFID Jukebox."""
-import logging
 from typing import Any, Dict, Optional
 
 import voluptuous as vol
@@ -16,7 +15,38 @@ from .const import (
     DEFAULT_PAUSE_ON_TAG_REMOVAL,
 )
 
-_LOGGER = logging.getLogger(__name__)
+
+def _common_config_schema(config: Optional[Dict[str, Any]] = None) -> Dict[Any, Any]:
+    """Return the fields shared by the config and options flows."""
+    config = config or {}
+
+    def field(
+        key: str,
+        *,
+        optional: bool = False,
+        default: Any = None,
+    ) -> Any:
+        marker = vol.Optional if optional else vol.Required
+        if key in config:
+            return marker(key, default=config[key])
+        if default is not None:
+            return marker(key, default=default)
+        return marker(key)
+
+    return {
+        field(CONF_TAG_SENSOR): selector.EntitySelector(
+            selector.EntitySelectorConfig(domain=["sensor", "input_text"]),
+        ),
+        field(CONF_MEDIA_PLAYER): selector.EntitySelector(
+            selector.EntitySelectorConfig(domain="media_player"),
+        ),
+        field(CONF_MA_FILESYSTEM, optional=True): str,
+        field(
+            CONF_PAUSE_ON_TAG_REMOVAL,
+            default=DEFAULT_PAUSE_ON_TAG_REMOVAL,
+        ): selector.BooleanSelector(),
+    }
+
 
 class RFIDJukeboxConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for RFID Jukebox."""
@@ -26,31 +56,19 @@ class RFIDJukeboxConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def async_step_user(self, user_input: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Handle the initial step."""
-        errors: Dict[str, str] = {}
         if user_input is not None:
-            # TODO: Validate user input
             return self.async_create_entry(title="RFID Jukebox", data=user_input)
 
         return self.async_show_form(
             step_id="user",
-            data_schema=vol.Schema(
-                {
-                    vol.Required(CONF_TAG_SENSOR): selector.EntitySelector(
-                        selector.EntitySelectorConfig(domain=["sensor", "input_text"]),
-                    ),
-                    vol.Required(CONF_MEDIA_PLAYER): selector.EntitySelector(
-                        selector.EntitySelectorConfig(domain="media_player"),
-                    ),
-                    vol.Optional(CONF_MA_FILESYSTEM): str,
-                }
-            ),
-            errors=errors,
-            description_placeholders=None,
+            data_schema=vol.Schema(_common_config_schema()),
         )
 
     @staticmethod
     @callback
-    def async_get_options_flow(config_entry: config_entries.ConfigEntry) -> config_entries.OptionsFlow:
+    def async_get_options_flow(
+        _config_entry: config_entries.ConfigEntry,
+    ) -> config_entries.OptionsFlow:
         """Get the options flow for this handler."""
         return RFIDJukeboxOptionsFlowHandler()
 
@@ -58,48 +76,15 @@ class RFIDJukeboxConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 class RFIDJukeboxOptionsFlowHandler(config_entries.OptionsFlow):
     """Handle an options flow for RFID Jukebox."""
 
-    def __init__(self) -> None:
-        """Initialize options flow."""
-        """No longer needed following 25.12+
-        self.config_entry = config_entry"""
-
     async def async_step_init(self, user_input: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Manage the options."""
-        errors: Dict[str, str] = {}
         if user_input is not None:
             return self.async_create_entry(title="", data=user_input)
 
         config = {**self.config_entry.data, **self.config_entry.options}
+        schema = _common_config_schema(config)
 
         return self.async_show_form(
             step_id="init",
-            data_schema=vol.Schema(
-                {
-                    vol.Required(
-                        CONF_TAG_SENSOR,
-                        default=config.get(CONF_TAG_SENSOR),
-                    ): selector.EntitySelector(
-                        selector.EntitySelectorConfig(domain=["sensor", "input_text"]),
-                    ),
-                    vol.Required(
-                        CONF_MEDIA_PLAYER,
-                        default=config.get(CONF_MEDIA_PLAYER),
-                    ): selector.EntitySelector(
-                        selector.EntitySelectorConfig(domain="media_player"),
-                    ),
-                    vol.Optional(
-                        CONF_MA_FILESYSTEM,
-                        default=config.get(CONF_MA_FILESYSTEM),
-                    ): str,
-                    vol.Required(
-                        CONF_PAUSE_ON_TAG_REMOVAL,
-                        default=config.get(
-                            CONF_PAUSE_ON_TAG_REMOVAL,
-                            DEFAULT_PAUSE_ON_TAG_REMOVAL,
-                        ),
-                    ): selector.BooleanSelector(),
-                }
-            ),
-            errors=errors,
-            description_placeholders=None,
+            data_schema=vol.Schema(schema),
         )
