@@ -37,6 +37,7 @@ substitutions:
   tas58xx_volume_max: -12dB
   tas58xx_volume_min: -60dB
   ir_rx_pin: GPIO07
+  power_adc_pin: GPIO04
 
 esphome:
   name: ${name}

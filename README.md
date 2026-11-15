@@ -15,6 +15,11 @@ remotely at a pinned upstream commit; device-specific logic is kept in
 3. Validate or build with `esphome config kids-jukebox.factory.yaml` or
    `esphome run kids-jukebox.factory.yaml`. The first flash should be over USB.
 
+GitHub Actions copies `secrets.yaml.example` to `secrets.yaml` for its builds.
+The published firmware therefore contains the example Wi-Fi credentials and
+the public dummy API key; replace them with device-specific values and build
+locally before using the firmware with Home Assistant.
+
 The Sonocotta packages are pinned to commit
 `98d19a08d9b753ed7d14f2a30c799d40e3464942`. To update upstream deliberately,
 change the `ref` in [kids-jukebox.yaml](./kids-jukebox.yaml). This imports
