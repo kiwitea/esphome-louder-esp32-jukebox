@@ -112,7 +112,7 @@ packages:
 api:
   reboot_timeout: 0s
   encryption:
-    key: !secret api_encryption_key
+    key: !secret esphome_api_encryption_key
 
 media_player:
   - id: !extend external_media_player
