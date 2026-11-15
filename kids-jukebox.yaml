@@ -9,7 +9,7 @@
 #
 # The basics are derived from Louder-ESP32-S3:
 #  Ref: https://github.com/sonocotta/esp32-audio-dock/blob/main/firmware/esphome/3-louder-esp32/louder-esp32-s3-idf.yaml
-# 
+#
 # We try to stay as close as possible to the original Louder-ESP32-S3
 #  because that makes updating easier.
 #
