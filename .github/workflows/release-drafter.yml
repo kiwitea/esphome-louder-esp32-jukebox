@@ -17,4 +17,4 @@ jobs:
   release-drafter:
     name: Update draft release
     # Computes the next CalVer version and updates the draft changelog.
-    uses: esphome/workflows/.github/workflows/draft-calver-release.yml@b2c0cffae477d81175c67e6a44651a9bc2b49f6f  # 2026.11.0
+    uses: esphome/workflows/.github/workflows/draft-calver-release.yml@7f0b0f230ba1b9fa1361e699b3a2043c92f0d3f3  # 2026.11.1
