@@ -10,7 +10,7 @@
 # It includes:
 # - playback control via 3 buttons (play/pause, next, previous)
 # - volume control via 2 buttons (up, down)
-# - RFID card reader for track/playlist selection (via I2C)
+# - RFID card reader for track/playlist selection (via SPI)
 #
 # ==========================================================
 

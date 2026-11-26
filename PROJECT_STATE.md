@@ -1,6 +1,6 @@
 # Kids Jukebox (Louder-ESP32-S3 + Home Assistant)
 
-Nov 1, 2026 · @Malte
+Nov 1, 2026 · @kiwitea
 
 ## Status and decisions
 
@@ -172,7 +172,7 @@ Check these when the board is at home, then update the hardware list and ask Cla
 - [x] Does the integration pause when a card is removed? Test by scanning and removing a card --> Yes. Customization required.
 - [x] Does scanning the same card again restart playback, or is it ignored? --> With pause-on-removal enabled it resumes; with the option disabled it restarts from the beginning. Verify on the installed integration.
 - [x] Same card scanned while it is already playing: restart from the beginning (stock behavior) or keep playing? --> Restart from beginning
-- [ ] Add this repository to HACS, install the vendored RFID Jukebox integration, and disable pause on tag removal
+- [x] Add this repository to HACS, install the vendored RFID Jukebox integration, and disable pause on tag removal
 - [x] Decided: PN532 reader with new 13.56 MHz cards, tags or stickers; the old 125 kHz cards are retired
 
 Changelog, newest first:
