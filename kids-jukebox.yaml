@@ -38,7 +38,7 @@ substitutions:
   # The git ref the feature packages below are pulled from. Set this to the
   # same ref you pinned this file at, so a pinned config gets matching
   # packages instead of whatever happens to be on main.
-  sonocotta_ref: 7bf0dfb6c269f42f13090844da37654d6e2707c4
+  sonocotta_ref: ba21bfc10ac621bdecbfde3d24cdbf890359e2da
 
   # ===== Board-Specific Pinouts =====
   # I2S audio pins
