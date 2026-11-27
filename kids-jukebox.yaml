@@ -27,7 +27,7 @@ substitutions:
   task_stack_in_psram: "true"
 
   # MediaAssistant entity, used in jukebox.yaml to control playback and volume.
-  ma_entity: media_player.kids_jukebox
+  ma_entity: media_player.living_room_kids_jukebox
 
   # ===== Optional Hardware Feature Toggles =====
   # Accepts true/false quoted or bare; anything that is not "true"
