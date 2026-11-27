@@ -6,9 +6,11 @@ This integration is vendored from
 [`8c1759d4fdb4cc469006f5364a16f1865adce516`](https://github.com/XtracT/rfid_jukebox/commit/8c1759d4fdb4cc469006f5364a16f1865adce516).
 Only the integration directory is included; the upstream firmware is not.
 
-The local change adds the `pause_on_tag_removal` options-flow setting. It
-defaults to `true` to preserve upstream behavior. Set it to `false` to leave
-playback running when a tag is removed.
+Local changes add the `pause_on_tag_removal` option and optional ESPHome RFID
+feedback action. The pause option defaults to `true` to preserve upstream
+behavior. Set it to `false` to leave playback running when a tag is removed.
+The feedback action asks the ESPHome device to play its locally stored success
+or unknown-card tone.
 
 To review upstream changes since the vendored baseline:
 

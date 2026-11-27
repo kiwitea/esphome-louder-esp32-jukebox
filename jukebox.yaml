@@ -39,6 +39,34 @@ pn532_spi:
           id: rfid_tag_uid
           state: Unknown
 
+api:
+  actions:
+    - action: rfid_feedback
+      variables:
+        success: bool
+      then:
+        - if:
+            condition:
+              lambda: "return success;"
+            then:
+              - media_player.speaker.play_on_device_media_file:
+                  id: external_media_player
+                  media_file: rfid_success_tone
+                  announcement: true
+            else:
+              - media_player.speaker.play_on_device_media_file:
+                  id: external_media_player
+                  media_file: rfid_error_tone
+                  announcement: true
+
+media_player:
+  - id: !extend external_media_player
+    files:
+      - id: rfid_success_tone
+        file: sounds/rfid-success.flac
+      - id: rfid_error_tone
+        file: sounds/rfid-error.flac
+
 binary_sensor:
   - platform: gpio
     name: "${friendly_name} Volume Up"

@@ -11,6 +11,7 @@ from .const import (
     CONF_TAG_SENSOR,
     CONF_MEDIA_PLAYER,
     CONF_MA_FILESYSTEM,
+    CONF_FEEDBACK_ACTION,
     CONF_PAUSE_ON_TAG_REMOVAL,
     DEFAULT_PAUSE_ON_TAG_REMOVAL,
 )
@@ -41,6 +42,7 @@ def _common_config_schema(config: Optional[Dict[str, Any]] = None) -> Dict[Any, 
             selector.EntitySelectorConfig(domain="media_player"),
         ),
         field(CONF_MA_FILESYSTEM, optional=True): str,
+        field(CONF_FEEDBACK_ACTION, optional=True): str,
         field(
             CONF_PAUSE_ON_TAG_REMOVAL,
             default=DEFAULT_PAUSE_ON_TAG_REMOVAL,

@@ -47,6 +47,13 @@ RFID Jukebox integration from it. Select the `RFID Jukebox Tag` text sensor and
 the Music Assistant player, then map scanned UIDs to playlists or folders in
 the integration's `rfid_mappings.yaml`.
 
+The firmware includes short success and unknown-card tones as on-device audio
+files. To enable them, update the firmware and set the integration's **ESPHome
+feedback action** option to `esphome.kids_jukebox_rfid_feedback` (replace
+`kids_jukebox` with the ESPHome node name if different). The tones play locally
+on the jukebox; audio is not streamed from Home Assistant. Leave the option
+empty to disable feedback tones.
+
 The firmware publishes `Unknown` when a tag is removed, as required for
 re-scanning the same tag. In the integration's options, disable **Pause
 playback when tag is removed** to keep playback going; this also makes scanning

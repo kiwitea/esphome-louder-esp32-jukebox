@@ -9,7 +9,11 @@
                     "tag_sensor": "Tag Sensor",
                     "media_player": "Media Player",
                     "ma_filesystem": "Music Assistant Filesystem Path",
+                    "feedback_action": "ESPHome feedback action",
                     "pause_on_tag_removal": "Pause playback when tag is removed"
+                },
+                "data_description": {
+                    "feedback_action": "Optional ESPHome action for local RFID tones. Configure it in the jukebox firmware."
                 }
             }
         }
@@ -23,9 +27,11 @@
                     "tag_sensor": "Tag Sensor",
                     "media_player": "Media Player",
                     "ma_filesystem": "Music Assistant Filesystem Path",
+                    "feedback_action": "ESPHome feedback action",
                     "pause_on_tag_removal": "Pause playback when tag is removed"
                 },
                 "data_description": {
+                    "feedback_action": "Optional ESPHome action for local RFID tones, for example esphome.kids_jukebox_rfid_feedback. Configure this action in the jukebox firmware.",
                     "pause_on_tag_removal": "Disable this to keep playback running after a tag is removed."
                 }
             }

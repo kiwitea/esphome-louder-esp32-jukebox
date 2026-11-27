@@ -12,6 +12,7 @@ from .const import (
     CONF_TAG_SENSOR,
     CONF_MEDIA_PLAYER,
     CONF_MA_FILESYSTEM,
+    CONF_FEEDBACK_ACTION,
     CONF_PAUSE_ON_TAG_REMOVAL,
     DEFAULT_MAPPING_FILE_PATH,
     DEFAULT_PAUSE_ON_TAG_REMOVAL,
@@ -129,21 +130,33 @@ class RFIDJukebox:
                     if self.media_type_entity:
                         self.media_type_entity.update_option("folder")
 
+            if new_tag not in self.mappings:
+                _LOGGER.warning("Unmapped tag scanned: %s", new_tag)
+                self.current_tag = new_tag
+                await self.async_play_feedback(success=False)
+                return
+
             # If it's the same tag, decide whether to resume or restart.
             if self.current_tag == new_tag:
                 media_player_entity_id = self.config[CONF_MEDIA_PLAYER]
                 media_player_state = self.hass.states.get(media_player_entity_id)
 
                 if media_player_state and media_player_state.state == STATE_PAUSED:
+                    await self.async_play_feedback(success=True)
                     await self.async_resume_playback()
                 else:
                     # If the player is idle, off, or in any other state,
                     # treat it as a new request to play from the beginning.
                     _LOGGER.info("Player is not paused, restarting media for tag %s", new_tag)
                     if new_tag in self.mappings:
+                        await self.async_play_feedback(success=True)
                         mapping = self.mappings[new_tag]
-                        media_type = mapping.get("type", "playlist")
-                        media_name = mapping.get("name")
+                        if isinstance(mapping, dict):
+                            media_type = mapping.get("type", "playlist")
+                            media_name = mapping.get("name")
+                        else:
+                            media_type = "playlist"
+                            media_name = mapping
                         if media_name:
                             if media_type == "folder":
                                 await self.async_start_new_folder(media_name)
@@ -152,24 +165,22 @@ class RFIDJukebox:
             # Otherwise, it's a new media.
             else:
                 self.current_tag = new_tag
-                if new_tag in self.mappings:
-                    mapping = self.mappings[new_tag]
-                    if isinstance(mapping, dict):
-                        media_type = mapping.get("type", "playlist")
-                        media_name = mapping.get("name")
-                    else:
-                        media_type = "playlist"
-                        media_name = mapping
-
-                    if media_name:
-                        if media_type == "folder":
-                            await self.async_start_new_folder(media_name)
-                        else:
-                            await self.async_start_new_playlist(media_name)
-                    else:
-                        _LOGGER.warning("No media name found for tag: %s", new_tag)
+                await self.async_play_feedback(success=True)
+                mapping = self.mappings[new_tag]
+                if isinstance(mapping, dict):
+                    media_type = mapping.get("type", "playlist")
+                    media_name = mapping.get("name")
                 else:
-                    _LOGGER.warning("Unmapped tag scanned: %s", new_tag)
+                    media_type = "playlist"
+                    media_name = mapping
+
+                if media_name:
+                    if media_type == "folder":
+                        await self.async_start_new_folder(media_name)
+                    else:
+                        await self.async_start_new_playlist(media_name)
+                else:
+                    _LOGGER.warning("No media name found for tag: %s", new_tag)
         # Tag is removed
         else:
             if not self.config.get(
@@ -248,6 +259,36 @@ class RFIDJukebox:
             {"entity_id": self.config[CONF_MEDIA_PLAYER]},
             blocking=True,
         )
+
+    async def async_play_feedback(self, *, success: bool) -> None:
+        """Ask the ESPHome device to play its locally stored RFID feedback tone."""
+        feedback_action = self.config.get(CONF_FEEDBACK_ACTION)
+        if not feedback_action:
+            return
+
+        domain, separator, action = feedback_action.partition(".")
+        if domain != "esphome" or not separator or not action:
+            _LOGGER.error(
+                "Invalid ESPHome feedback action '%s'; expected esphome.<action>",
+                feedback_action,
+            )
+            return
+
+        from homeassistant.exceptions import HomeAssistantError
+
+        try:
+            await self.hass.services.async_call(
+                domain,
+                action,
+                {"success": success},
+                blocking=False,
+            )
+        except HomeAssistantError as err:
+            _LOGGER.warning(
+                "Unable to play RFID feedback tone via %s: %s",
+                feedback_action,
+                err,
+            )
 
     async def async_pause_player(self):
         """Pause the media player."""
