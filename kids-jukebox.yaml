@@ -24,7 +24,10 @@
 substitutions:
   name: kids-jukebox
   friendly_name: Kids Jukebox
-  task_stack_in_psram: "true" 
+  task_stack_in_psram: "true"
+
+  # MediaAssistant entity, used in jukebox.yaml to control playback and volume.
+  ma_entity: media_player.kids_jukebox
 
   # ===== Optional Hardware Feature Toggles =====
   # Accepts true/false quoted or bare; anything that is not "true"
